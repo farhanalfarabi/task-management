@@ -1,0 +1,417 @@
+{
+  "sectionCards": [
+    {
+      "description": "Active Projects",
+      "title": "12",
+      "trend": "up",
+      "trendText": "3 new this month"
+    },
+    {
+      "description": "Team Capacity",
+      "title": "87%",
+      "trend": "optimal",
+      "trendText": "Optimal range"
+    },
+    {
+      "description": "Blocked Items",
+      "title": "8",
+      "trend": "warning",
+      "trendText": "Needs attention"
+    },
+    {
+      "description": "Sprint Velocity",
+      "title": "42 pts",
+      "trend": "up",
+      "trendText": "12% increase"
+    }
+  ],
+  "statCards": [
+    {
+      "title": "Pull Requests",
+      "value": "156",
+      "icon": "code",
+      "color": "purple"
+    },
+    {
+      "title": "Tasks Completed",
+      "value": "89",
+      "icon": "check",
+      "color": "green"
+    },
+    {
+      "title": "Critical Bugs",
+      "value": "23",
+      "icon": "warning",
+      "color": "orange"
+    },
+    {
+      "title": "In Review",
+      "value": "12",
+      "icon": "clock",
+      "color": "gray"
+    }
+  ],
+  "teams": [
+    {
+      "id": 1,
+      "header": "Frontend Development Team",
+      "type": "Development",
+      "status": "Active",
+      "target": "15",
+      "limit": "12",
+      "reviewer": "Sarah Chen"
+    },
+    {
+      "id": 2,
+      "header": "Backend Development Team",
+      "type": "Development",
+      "status": "Active",
+      "target": "18",
+      "limit": "15",
+      "reviewer": "Michael Chen"
+    },
+    {
+      "id": 3,
+      "header": "QA Testing Team",
+      "type": "Quality Assurance",
+      "status": "Active",
+      "target": "10",
+      "limit": "8",
+      "reviewer": "Priya Singh"
+    },
+    {
+      "id": 4,
+      "header": "DevOps Team",
+      "type": "Infrastructure",
+      "status": "Active",
+      "target": "8",
+      "limit": "6",
+      "reviewer": "Alex Thompson"
+    },
+    {
+      "id": 5,
+      "header": "Design Team",
+      "type": "Design",
+      "status": "Active",
+      "target": "12",
+      "limit": "10",
+      "reviewer": "Leila Ahmadi"
+    },
+    {
+      "id": 6,
+      "header": "Product Management Team",
+      "type": "Management",
+      "status": "Active",
+      "target": "6",
+      "limit": "5",
+      "reviewer": "Emma Davis"
+    },
+    {
+      "id": 7,
+      "header": "Data Science Team",
+      "type": "Analytics",
+      "status": "Active",
+      "target": "9",
+      "limit": "7",
+      "reviewer": "David Kim"
+    },
+    {
+      "id": 8,
+      "header": "Security Team",
+      "type": "Security",
+      "status": "Active",
+      "target": "5",
+      "limit": "4",
+      "reviewer": "Lisa Wong"
+    },
+    {
+      "id": 9,
+      "header": "Mobile Development Team",
+      "type": "Development",
+      "status": "Active",
+      "target": "11",
+      "limit": "9",
+      "reviewer": "James Wilson"
+    },
+    {
+      "id": 10,
+      "header": "Content Team",
+      "type": "Content",
+      "status": "Active",
+      "target": "7",
+      "limit": "6",
+      "reviewer": "Nina Patel"
+    },
+    {
+      "id": 11,
+      "header": "Support Team",
+      "type": "Support",
+      "status": "Active",
+      "target": "14",
+      "limit": "12",
+      "reviewer": "Carlos Rodriguez"
+    },
+    {
+      "id": 12,
+      "header": "Marketing Team",
+      "type": "Marketing",
+      "status": "Active",
+      "target": "9",
+      "limit": "8",
+      "reviewer": "Sophia Martinez"
+    }
+  ],
+  "teamsOverviewCards": [
+    {
+      "description": "Total Members",
+      "title": "24",
+      "trend": "up",
+      "trendText": "↑ 5 this quarter"
+    },
+    {
+      "description": "Active Members",
+      "title": "21",
+      "trend": "optimal",
+      "trendText": "87.5% online rate"
+    },
+    {
+      "description": "Avg Task Completion",
+      "title": "94%",
+      "trend": "optimal",
+      "trendText": "Above target"
+    },
+    {
+      "description": "Teams",
+      "title": "8",
+      "trend": "",
+      "trendText": "Development, Design, QA"
+    }
+  ],
+  "activities": [
+    {
+      "id": "1",
+      "type": "status_change",
+      "user": { "name": "Angelina Gotelli", "initials": "AG" },
+      "action": "has change",
+      "target": "PD-979",
+      "status": { "text": "Completed", "color": "green" },
+      "timestamp": "06:20 PM",
+      "date": "SUNDAY, 06 MARCH"
+    },
+    {
+      "id": "2",
+      "type": "comment",
+      "user": { "name": "Max Alexander", "initials": "MA", "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=MaxAlexander" },
+      "action": "comment on your",
+      "target": "Post",
+      "comment": "Fine, Java MIGHT be a good example of what a programming language should be like. But Java applications are good examples of what applications SHOULDN'T be like.",
+      "timestamp": "05:53 PM",
+      "date": "SUNDAY, 06 MARCH"
+    },
+    {
+      "id": "3",
+      "type": "tag_added",
+      "user": { "name": "Eugene Stewart", "initials": "ES" },
+      "action": "added tags",
+      "tags": [
+        { "text": "Live Issue", "color": "red" },
+        { "text": "Backend", "color": "blue" }
+      ],
+      "timestamp": "04:40 PM",
+      "date": "SUNDAY, 06 MARCH"
+    },
+    {
+      "id": "4",
+      "type": "file_added",
+      "user": { "name": "Shannon Baker", "initials": "SB" },
+      "action": "added",
+      "target": "document.csv",
+      "timestamp": "03:18 PM",
+      "date": "SUNDAY, 06 MARCH"
+    },
+    {
+      "id": "5",
+      "type": "mention",
+      "user": { "name": "Roberta Horton", "initials": "RH", "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=RobertaHorton" },
+      "action": "mentioned you in a comment",
+      "target": "Post",
+      "comment": "@Carolyn One of the main causes of the fall of the Roman Empire was that-lacking zero-they had no way to indicate successful termination of their C programs.",
+      "timestamp": "02:17 PM",
+      "date": "SUNDAY, 06 MARCH"
+    },
+    {
+      "id": "6",
+      "type": "assignment",
+      "user": { "name": "Lee Wheeler", "initials": "LW" },
+      "action": "assigned ticket",
+      "target": "PD-1092",
+      "assignee": "Alvin Moreno",
+      "timestamp": "11:13 AM",
+      "date": "SUNDAY, 06 MARCH"
+    },
+    {
+      "id": "7",
+      "type": "comment",
+      "user": { "name": "Jessica Wells", "initials": "JW", "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=JessicaWells" },
+      "action": "comment on your",
+      "target": "Post",
+      "comment": "The trouble with programmers is that you can never tell what a programmer is doing until it's too late.",
+      "timestamp": "08:49 AM",
+      "date": "SATURDAY, 05 MARCH"
+    },
+    {
+      "id": "8",
+      "type": "status_change",
+      "user": { "name": "Earl Miles", "initials": "EM", "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=EarlMiles" },
+      "action": "has change",
+      "target": "PD-977",
+      "status": { "text": "In progress", "color": "blue" },
+      "timestamp": "08:30 AM",
+      "date": "SATURDAY, 05 MARCH"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "E-Commerce Platform",
+      "status": "In Progress",
+      "icon": "shopping",
+      "progress": 72,
+      "tasksCompleted": 18,
+      "tasksTotal": 25,
+      "dueDate": "2024-09-15",
+      "trackStatus": "On track",
+      "teamMembers": [
+        {
+          "name": "Sarah Chen",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen"
+        },
+        {
+          "name": "Michael Chen",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=MichaelChen"
+        },
+        {
+          "name": "David Kim",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=DavidKim"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Mobile App Redesign",
+      "status": "In Progress",
+      "icon": "smartphone",
+      "progress": 45,
+      "tasksCompleted": 9,
+      "tasksTotal": 20,
+      "dueDate": "2024-10-20",
+      "trackStatus": "On track",
+      "teamMembers": [
+        {
+          "name": "Leila Ahmadi",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=LeilaAhmadi"
+        },
+        {
+          "name": "James Wilson",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=JamesWilson"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Design System",
+      "status": "Planning",
+      "icon": "palette",
+      "progress": 15,
+      "tasksCompleted": 3,
+      "tasksTotal": 20,
+      "dueDate": "2024-11-30",
+      "trackStatus": "On track",
+      "teamMembers": [
+        {
+          "name": "Leila Ahmadi",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=LeilaAhmadi"
+        },
+        {
+          "name": "Emma Davis",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=EmmaDavis"
+        },
+        {
+          "name": "Nina Patel",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=NinaPatel"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "API Backend",
+      "status": "In Progress",
+      "icon": "database",
+      "progress": 85,
+      "tasksCompleted": 17,
+      "tasksTotal": 20,
+      "dueDate": "2024-08-25",
+      "trackStatus": "On track",
+      "teamMembers": [
+        {
+          "name": "Michael Chen",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=MichaelChen"
+        },
+        {
+          "name": "Alex Thompson",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=AlexThompson"
+        },
+        {
+          "name": "Raj Patel",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=RajPatel"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Website Redesign",
+      "status": "Completed",
+      "icon": "globe",
+      "progress": 100,
+      "tasksCompleted": 30,
+      "tasksTotal": 30,
+      "dueDate": "2024-07-10",
+      "trackStatus": "On track",
+      "teamMembers": [
+        {
+          "name": "Sarah Chen",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen"
+        },
+        {
+          "name": "Leila Ahmadi",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=LeilaAhmadi"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Frontend Framework",
+      "status": "In Progress",
+      "icon": "code",
+      "progress": 60,
+      "tasksCompleted": 12,
+      "tasksTotal": 20,
+      "dueDate": "2024-09-30",
+      "trackStatus": "At risk",
+      "teamMembers": [
+        {
+          "name": "Sarah Chen",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen"
+        },
+        {
+          "name": "Thomas Wilson",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=ThomasWilson"
+        },
+        {
+          "name": "Maya Johnson",
+          "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=MayaJohnson"
+        }
+      ]
+    }
+  ]
+}
