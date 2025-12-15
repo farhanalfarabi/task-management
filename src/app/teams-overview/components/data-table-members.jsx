@@ -405,7 +405,7 @@ export function DataTableMembers({
         </div>
         <div className="flex items-center justify-between px-4">
           <div className="text-muted-foreground hidden flex-1 text-sm lg:flex">
-            {table.getFilteredRowModel().rows.length} row(s) total.
+            {table.getFilteredRowModel().rows.length} Member(s) total.
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
