@@ -2,64 +2,34 @@
 
 import * as React from "react";
 import { Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/lib/components/ui/button";
 import { PageHeader } from "@/lib/components/page-header";
 import { IconDeviceFloppy } from "@tabler/icons-react";
-import data from "@/app/data.json";
-import { ProjectDetailsForm } from "./components/project-details-form";
-import { TimelineBudgetForm } from "./components/timeline-budget-form";
-import { TeamResourcesForm } from "./components/team-resources-form";
-import { DocumentsFilesForm } from "./components/documents-files-form";
+import { ProjectDetailsForm } from "../detail/edit/components/project-details-form";
+import { TimelineBudgetForm } from "../detail/edit/components/timeline-budget-form";
+import { TeamResourcesForm } from "../detail/edit/components/team-resources-form";
+import { DocumentsFilesForm } from "../detail/edit/components/documents-files-form";
 
-function EditProjectContent() {
-  const searchParams = useSearchParams();
+function AddProjectContent() {
   const router = useRouter();
-  const projectId = searchParams.get("id") || "1";
-  const project = data.projects?.find((p) => p.id === parseInt(projectId)) || data.projects?.[0];
 
-  const formatDateForState = (dateString) => {
-    if (!dateString) return "2025-01-05";
-    if (dateString.includes("-") && dateString.length === 10) return dateString;
-    const date = new Date(dateString);
-    if (isNaN(date.getTime())) return "2025-01-05";
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
-  // Initialize team members with default roles if not present
-  const initializeTeamMembers = () => {
-    const roles = [
-      "Project Lead",
-      "Frontend Developer",
-      "Backend Developer",
-      "UX Designer",
-      "QA Engineer",
-    ];
-    
-    return (project?.teamMembers || []).map((member, index) => ({
-      ...member,
-      role: member.role || roles[index] || roles[0],
-    }));
-  };
-
+  // Initialize with empty/default values for new project
   const [formData, setFormData] = React.useState({
-    projectName: project?.name || "Customer Dashboard v2.0",
-    status: project?.status || "In Development",
+    projectName: "",
+    status: "In Development",
     priority: "High",
-    description: "Complete redesign and development of the customer-facing dashboard with improved data visualization and user experience. The new version should include real-time analytics, customizable widgets, and a modern interface that aligns with our brand guidelines.",
-    projectLead: project?.teamMembers?.[0]?.name || "Robert Chen",
+    description: "",
+    projectLead: "",
     department: "Development",
-    startDate: "2025-01-05",
-    dueDate: formatDateForState(project?.dueDate) || "2025-01-30",
-    budget: "85000",
-    teamSize: project?.teamMembers?.length?.toString() || "5",
-    completionPercentage: project?.progress?.toString() || "45",
+    startDate: "",
+    dueDate: "",
+    budget: "",
+    teamSize: "0",
+    completionPercentage: "0",
   });
 
-  const [teamMembers, setTeamMembers] = React.useState(initializeTeamMembers());
+  const [teamMembers, setTeamMembers] = React.useState([]);
   const [projectFiles, setProjectFiles] = React.useState([]);
 
   const handleInputChange = (field, value) => {
@@ -79,12 +49,16 @@ function EditProjectContent() {
     e.preventDefault();
     // Handle form submission
     console.log("Form submitted:", formData);
-    // Navigate back to project detail
-    router.push(`/projects/detail?id=${projectId}`);
+    console.log("Team members:", teamMembers);
+    console.log("Files:", projectFiles);
+    
+    // TODO: Create project via API
+    // After successful creation, navigate to projects list or new project detail
+    router.push("/projects");
   };
 
   const handleCancel = () => {
-    router.push(`/projects/detail?id=${projectId}`);
+    router.push("/projects");
   };
 
   const formatDateForInput = (dateString) => {
@@ -100,12 +74,11 @@ function EditProjectContent() {
   return (
     <>
       <PageHeader 
-        title="Edit Project"
+        title="Add New Project"
         breadcrumbs={[
           { label: "Home", href: "/" },
           { label: "Projects", href: "/projects" },
-          { label: project?.name || "Project", href: `/projects/detail?id=${projectId}` },
-          { label: "Edit" }
+          { label: "Add New Project" }
         ]} 
       />
       <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -159,7 +132,7 @@ function EditProjectContent() {
                   className="min-w-[140px] gap-2 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
                 >
                   <IconDeviceFloppy className="size-4" />
-                  Save Changes
+                  Create Project
                 </Button>
               </div>
             </div>
@@ -171,7 +144,7 @@ function EditProjectContent() {
   );
 }
 
-export default function EditProjectPage() {
+export default function AddProjectPage() {
   return (
     <Suspense
       fallback={
@@ -182,7 +155,7 @@ export default function EditProjectPage() {
         </div>
       }
     >
-      <EditProjectContent />
+      <AddProjectContent />
     </Suspense>
   );
 }

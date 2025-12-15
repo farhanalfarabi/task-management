@@ -3,7 +3,7 @@
 import * as React from "react"
 import {
   IconCamera,
-  IconDashboard,
+  IconLayoutDashboard,
   IconCurrencyDollar,
   IconFileAi,
   IconFileDescription,
@@ -41,7 +41,7 @@ const data = {
     {
       title: "Dashboard",
       url: "/",
-      icon: IconDashboard,
+      icon: IconLayoutDashboard,
     },
     {
       title: "Projects",

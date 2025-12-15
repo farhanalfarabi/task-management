@@ -16,14 +16,14 @@ const COLUMN_TITLES = {
   done: "Done",
 };
 
-export function SprintKanban({ sprint }) {
+export function SprintKanban({ sprint, initialColumns, onColumnsChange }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sprintId = searchParams.get("id") || "1";
   const projectId = searchParams.get("projectId") || "1";
 
   // Sample tasks data for sprint - bisa diambil dari sprint data jika ada
-  const [columns, setColumns] = React.useState({
+  const defaultColumns = {
     pending: [
       {
         id: "1",
@@ -109,13 +109,16 @@ export function SprintKanban({ sprint }) {
         dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
       },
     ],
-  });
+  };
+
+  const [columns, setColumns] = React.useState(initialColumns || defaultColumns);
 
   const handleValueChange = React.useCallback((newColumns) => {
     setColumns(newColumns);
+    onColumnsChange?.(newColumns);
     // Bisa ditambahkan callback untuk save ke backend
     console.log("Columns changed:", newColumns);
-  }, []);
+  }, [onColumnsChange]);
 
   const handleViewTaskDetail = (e, task) => {
     e.stopPropagation();

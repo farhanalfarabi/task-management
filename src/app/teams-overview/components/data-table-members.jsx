@@ -313,7 +313,7 @@ export function DataTableMembers({
     <div className="w-full flex flex-col gap-4">
       <div className="flex items-center justify-between px-4 lg:px-6">
         <div className="flex items-center gap-2 flex-1">
-          <div className="relative flex-1 max-w-sm">
+          <div className="relative flex-1 max-w-sm mr-4">
             <IconSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground size-4" />
             <Input
               placeholder="Search team members..."

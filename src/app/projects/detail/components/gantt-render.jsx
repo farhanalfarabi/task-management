@@ -56,6 +56,7 @@ export const convertTasksToGanttFeatures = (tasks, statuses = defaultStatuses) =
 export const GanttRender = ({ project, initialFeatures, onFeatureMove, onAddFeature, onAddMarker }) => {
   const [range, setRange] = useState("monthly");
   const [zoom, setZoom] = useState(100);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   
   const [features, setFeatures] = useState(() => {
     if (initialFeatures) return initialFeatures;
@@ -145,20 +146,24 @@ export const GanttRender = ({ project, initialFeatures, onFeatureMove, onAddFeat
   };
 
   return (
-    <div className="flex h-[600px] w-full flex-col rounded-lg border overflow-hidden">
+    <div className="flex h-[400px] md:h-[600px] w-full flex-col rounded-lg border overflow-hidden">
       <GanttToolbar
         range={range}
         onRangeChange={setRange}
         zoom={zoom}
         onZoomChange={setZoom}
+        sidebarCollapsed={sidebarCollapsed}
+        onSidebarToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 overflow-hidden min-h-0">
         <GanttProvider
           range={range}
           zoom={zoom}
           onAddItem={handleAddFeature}
           className="h-full"
+          sidebarCollapsed={sidebarCollapsed}
         >
+        {!sidebarCollapsed && (
         <GanttSidebar>
           {Object.entries(featuresByLane).map(([lane, laneFeatures]) => (
             <GanttSidebarGroup key={lane} name={lane}>
@@ -174,6 +179,7 @@ export const GanttRender = ({ project, initialFeatures, onFeatureMove, onAddFeat
             </GanttSidebarGroup>
           ))}
         </GanttSidebar>
+        )}
 
         <GanttTimeline>
           <GanttHeader />

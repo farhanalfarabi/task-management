@@ -20,6 +20,7 @@ export const GanttProvider = ({
   onAddItem,
   children,
   className,
+  sidebarCollapsed = false,
 }) => {
   const scrollRef = useRef(null);
   const [timelineData, setTimelineData] = useState(() =>
@@ -31,15 +32,28 @@ export const GanttProvider = ({
   const rowHeight = 36;
 
   // Recalculate columnWidth when range changes
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+  
   const columnWidth = useMemo(() => {
     let width = 50;
     if (range === "monthly") {
-      width = 150;
+      width = isMobile ? 120 : 150;
     } else if (range === "quarterly") {
-      width = 100;
+      width = isMobile ? 80 : 100;
+    } else {
+      width = isMobile ? 40 : 50;
     }
     return width;
-  }, [range]);
+  }, [range, isMobile]);
 
   const cssVariables = useMemo(
     () => ({
@@ -62,14 +76,33 @@ export const GanttProvider = ({
 
   useEffect(() => {
     const updateSidebarWidth = () => {
+      // If sidebar is collapsed, set width to 0
+      if (sidebarCollapsed) {
+        setSidebarWidth(0);
+        return;
+      }
+      
       const sidebarElement = scrollRef.current?.querySelector(
         '[data-roadmap-ui="gantt-sidebar"]'
       );
-      const newWidth = sidebarElement ? 300 : 0;
+      if (!sidebarElement) {
+        setSidebarWidth(0);
+        return;
+      }
+      
+      // Responsive sidebar width: smaller on mobile
+      const isMobile = window.innerWidth < 768;
+      const newWidth = isMobile ? 200 : 300;
       setSidebarWidth(newWidth);
     };
 
     updateSidebarWidth();
+
+    // Update on resize
+    const handleResize = () => {
+      updateSidebarWidth();
+    };
+    window.addEventListener('resize', handleResize);
 
     const observer = new MutationObserver(updateSidebarWidth);
     if (scrollRef.current) {
@@ -81,8 +114,9 @@ export const GanttProvider = ({
 
     return () => {
       observer.disconnect();
+      window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [sidebarCollapsed]);
 
   const handleScroll = useCallback(
     throttle(() => {
@@ -231,11 +265,12 @@ export const GanttProvider = ({
   return (
     <GanttContext.Provider value={contextValue}>
       <div
-        className={`gantt relative grid h-full w-full flex-none select-none overflow-auto rounded-sm bg-secondary ${range} ${className || ""}`}
+        className={`gantt relative grid h-full w-full flex-none select-none overflow-x-auto overflow-y-auto rounded-sm bg-secondary ${range} ${className || ""}`}
         ref={scrollRef}
         style={{
           ...cssVariables,
-          gridTemplateColumns: "var(--gantt-sidebar-width) 1fr",
+          gridTemplateColumns: sidebarCollapsed ? "0 1fr" : "var(--gantt-sidebar-width) 1fr",
+          WebkitOverflowScrolling: "touch", // Smooth scrolling on iOS
         }}
       >
         {children}

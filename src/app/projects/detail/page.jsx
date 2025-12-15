@@ -1,7 +1,9 @@
 "use client";
 
 import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { IconPencil, IconPlus } from "@tabler/icons-react";
+import { Button } from "@/lib/components/ui/button";
 import data from "@/app/data.json";
 import {
   Tabs,
@@ -9,7 +11,8 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/components/ui/tabs";
-import { KanbanRender } from "./components/kanban-render";
+import { PageHeader } from "@/lib/components/page-header";
+import { SprintTasksView } from "./components/sprint-tasks-view";
 import { GanttRender } from "./components/gantt-render";
 import { DocumentsView } from "./components/documents-view";
 import { ProjectDetailsCard } from "./components/project-details-card";
@@ -20,8 +23,17 @@ import { UpcomingMilestonesCard } from "./components/upcoming-milestones-card";
 
 function ProjectDetailContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const projectId = searchParams.get("id") || "1";
   const project = data.projects?.find((p) => p.id === parseInt(projectId)) || data.projects?.[0];
+
+  const handleEdit = () => {
+    router.push(`/projects/detail/edit?id=${projectId}`);
+  };
+
+  const handleAddSprint = () => {
+    router.push(`/projects/detail/sprint/add?projectId=${projectId}`);
+  };
 
   if (!project) {
     return (
@@ -103,16 +115,45 @@ function ProjectDetailContent() {
   };
 
   return (
-    <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-      <div className="px-4 lg:px-6">
-        
-
-        <Tabs defaultValue="overview" className="w-full">
+    <>
+      <PageHeader 
+        title={project.name}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Projects", href: "/projects" },
+          { label: project.name }
+        ]}
+        actions={
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleAddSprint}
+              className="gap-2"
+            >
+              <IconPlus className="size-4" />
+              <span className="hidden sm:inline">Add Sprint</span>
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={handleEdit}
+              className="gap-2"
+            >
+              <IconPencil className="size-4" />
+              <span className="hidden sm:inline">Edit Project</span>
+            </Button>
+          </>
+        }
+      />
+      <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+        <div className="px-4 lg:px-6">
+          <Tabs defaultValue="overview" className="w-full">
           <TabsList className="w-full">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="sprint">Sprint</TabsTrigger>
             <TabsTrigger value="timeline">Timeline</TabsTrigger>
-            <TabsTrigger value="dokuments">Dokuments</TabsTrigger>
+            <TabsTrigger value="documents">Documents</TabsTrigger>
 
           </TabsList>
 
@@ -134,7 +175,7 @@ function ProjectDetailContent() {
           </TabsContent>
 
           <TabsContent value="sprint" className="mt-6">
-            <KanbanRender 
+            <SprintTasksView 
               project={project} 
               initialColumns={getKanbanColumns(project)}
               onColumnsChange={(columns) => {
@@ -159,12 +200,13 @@ function ProjectDetailContent() {
             />
           </TabsContent>
               
-          <TabsContent value="dokuments" className="mt-6">
+          <TabsContent value="documents" className="mt-6">
             <DocumentsView />
           </TabsContent>
         </Tabs>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

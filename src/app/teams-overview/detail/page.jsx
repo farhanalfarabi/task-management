@@ -1,9 +1,9 @@
 "use client";
 
 import { Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { Button } from "@/lib/components/ui/button";
-import { IconArrowLeft, IconTrendingUp, IconTrendingDown, IconAlertCircle, IconActivity } from "@tabler/icons-react";
+import { useSearchParams } from "next/navigation";
+import { PageHeader } from "@/lib/components/page-header";
+import { IconTrendingUp, IconTrendingDown, IconAlertCircle, IconActivity } from "@tabler/icons-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/lib/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/lib/components/ui/card";
 import data from "@/app/data.json";
@@ -16,17 +16,26 @@ import { Separator } from "@/lib/components/ui/separator";
 
 function TeamMemberDetailContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const memberId = searchParams.get("id") || "1";
   const member = data.teams?.find((t) => t.id === parseInt(memberId));
 
   if (!member) {
     return (
+      <>
+        <PageHeader 
+          title="Member Not Found" 
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Teams", href: "/teams-overview" },
+            { label: "Not Found" }
+          ]} 
+        />
       <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
         <div className="px-4 lg:px-6">
           <p>Member not found</p>
         </div>
       </div>
+      </>
     );
   }
 
@@ -96,6 +105,15 @@ function TeamMemberDetailContent() {
   );
 
   return (
+    <>
+      <PageHeader 
+        title={memberName}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Teams", href: "/teams-overview" },
+          { label: memberName }
+        ]} 
+      />
     <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
       <div className="px-4 lg:px-6 ">
         <Tabs defaultValue="overview" className="w-full ">
@@ -136,7 +154,7 @@ function TeamMemberDetailContent() {
             <div className="space-y-6">
               {/* Project Statistics Cards */}
               {totalProjects > 0 && (
-                <div className="px-4 lg:px-6">
+                <div className="">
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     {[
                       {
@@ -184,7 +202,7 @@ function TeamMemberDetailContent() {
               {activeProjects.length > 0 && (
                 <>
                   <Separator className="my-8" />
-                  <div className="px-4 lg:px-6">
+                  <div className="">
                     <div className="mb-6 flex flex-row items-center justify-between">
                       <h1 className="text-2xl font-semibold tracking-tight">Active Projects</h1>
                       <p className="text-muted-foreground">
@@ -237,6 +255,7 @@ function TeamMemberDetailContent() {
         </Tabs>
       </div>
     </div>
+    </>
   );
 }
 

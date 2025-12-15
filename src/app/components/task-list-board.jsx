@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ListProvider,
   ListGroup,
@@ -39,6 +39,11 @@ const initialTasks = {
 
 export function TaskListBoard() {
   const [tasks, setTasks] = useState(initialTasks);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -95,6 +100,39 @@ export function TaskListBoard() {
 
     setTasks(newTasks);
   };
+
+  if (!isMounted) {
+    return (
+      <div className="mx-auto w-full ">
+        {/* Header */}
+        <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-8 px-4 lg:px-6">
+          <h1 className="text-foreground text-xl font-semibold md:text-2xl">Today's To-Do List</h1>
+        </div>
+
+        {/* Board - Loading state */}
+        <div className=" bg-background rounded-lg border border-border/50  shadow-sm m-6">
+          <div className="flex flex-col">
+            {initialStatuses.map((status) => (
+              <div key={status.id} className="overflow-hidden bg-background">
+                <div className="flex shrink-0 items-center gap-2 bg-muted/50 border-b p-3">
+                  <div
+                    className="h-2 w-2 rounded-full shrink-0"
+                    style={{ backgroundColor: status.color }}
+                  />
+                  <p className="m-0 font-semibold text-sm">{status.name}</p>
+                </div>
+                <div className="flex flex-1 flex-col gap-3 p-4 min-h-[100px]">
+                  <div className="text-muted-foreground text-center text-sm py-8">
+                    Loading...
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto w-full ">

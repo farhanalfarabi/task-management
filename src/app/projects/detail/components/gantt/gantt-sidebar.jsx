@@ -7,11 +7,11 @@ import { cn } from "@/lib/utils";
 
 export const GanttSidebarHeader = () => (
   <div
-    className="sticky top-0 z-10 flex shrink-0 items-end justify-between gap-2.5 border-border/50 border-b bg-backdrop/90 p-2.5 font-medium text-muted-foreground text-xs backdrop-blur-sm"
+    className="sticky top-0 z-10 flex shrink-0 items-end justify-between gap-1.5 sm:gap-2.5 border-border/50 border-b bg-backdrop/90 p-1.5 sm:p-2.5 font-medium text-muted-foreground text-xs backdrop-blur-sm"
     style={{ height: "var(--gantt-header-height)" }}
   >
     <p className="flex-1 truncate text-left">Issues</p>
-    <p className="shrink-0">Duration</p>
+    <p className="shrink-0 hidden sm:inline">Duration</p>
   </div>
 );
 
@@ -48,7 +48,7 @@ export const GanttSidebarItem = ({
   return (
     <div
       className={cn(
-        "relative flex items-center gap-2.5 p-2.5 text-xs hover:bg-secondary cursor-pointer",
+        "relative flex items-center gap-1.5 sm:gap-2.5 p-1.5 sm:p-2.5 text-xs hover:bg-secondary cursor-pointer",
         className
       )}
       key={feature.id}
@@ -69,7 +69,7 @@ export const GanttSidebarItem = ({
       <p className="pointer-events-none flex-1 truncate text-left font-medium">
         {feature.name}
       </p>
-      <p className="pointer-events-none text-muted-foreground">{duration}</p>
+      <p className="pointer-events-none text-muted-foreground hidden sm:inline">{duration}</p>
     </div>
   );
 };
@@ -77,7 +77,7 @@ export const GanttSidebarItem = ({
 export const GanttSidebarGroup = ({ children, name, className }) => (
   <div className={className}>
     <p
-      className="w-full truncate p-2.5 text-left font-medium text-muted-foreground text-xs"
+      className="w-full truncate p-1.5 sm:p-2.5 text-left font-medium text-muted-foreground text-xs"
       style={{ height: "var(--gantt-row-height)" }}
     >
       {name}

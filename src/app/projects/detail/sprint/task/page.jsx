@@ -2,24 +2,24 @@
 
 import * as React from "react";
 import { Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { IconArrowLeft } from "@tabler/icons-react";
-import { Button } from "@/lib/components/ui/button";
+import { useSearchParams } from "next/navigation";
+import { PageHeader } from "@/lib/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/lib/components/ui/card";
 import { Badge } from "@/lib/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/lib/components/ui/avatar";
 import { Separator } from "@/lib/components/ui/separator";
 import { IconCalendar, IconUser, IconFlag } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
+import data from "@/app/data.json";
 import { TaskDescription } from "./components/task-description";
 import { TaskChecklist } from "./components/task-checklist";
 
 function TaskDetailContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const taskId = searchParams.get("id") || "1";
   const sprintId = searchParams.get("sprintId") || "1";
   const projectId = searchParams.get("projectId") || "1";
+  const project = data.projects?.find((p) => p.id === parseInt(projectId)) || data.projects?.[0];
 
   // Sample task data - bisa diambil dari API atau data.json
   const [task, setTask] = React.useState({
@@ -57,10 +57,6 @@ function TaskDetailContent() {
     setTask((prev) => ({ ...prev, checklistItems: newItems }));
   };
 
-  const handleBack = () => {
-    router.push(`/projects/detail/sprint?id=${sprintId}&projectId=${projectId}`);
-  };
-
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -82,11 +78,20 @@ function TaskDetailContent() {
   };
 
   return (
-    <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-      <div className="px-4 lg:px-6">
-        
-
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <>
+      <PageHeader 
+        title={task.title}
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Projects", href: "/projects" },
+          { label: project?.name || "Project", href: `/projects/detail?id=${projectId}` },
+          { label: `Sprint ${sprintId}`, href: `/projects/detail/sprint?id=${sprintId}&projectId=${projectId}` },
+          { label: task.title }
+        ]} 
+      />
+      <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+        <div className="px-4 lg:px-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             <TaskDescription
@@ -183,8 +188,9 @@ function TaskDetailContent() {
             </Card>
           </div>
         </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

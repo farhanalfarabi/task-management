@@ -7,13 +7,6 @@ import { Input } from "@/lib/components/ui/input";
 import { Label } from "@/lib/components/ui/label";
 import { Button } from "@/lib/components/ui/button";
 import { Checkbox } from "@/lib/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/lib/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/lib/components/ui/toggle-group";
 import { IconPlus, IconTrash } from "@tabler/icons-react";
 import { SprintTasksList } from "./sprint-tasks-list";
@@ -38,13 +31,6 @@ export function AddTaskForm({ sprintId, projectId, onBack }) {
     { id: 2, text: "", completed: false },
     { id: 3, text: "", completed: false },
   ]);
-
-  // Sample sprints - bisa diambil dari API atau data.json
-  const sprints = [
-    { id: "1", name: "Sprint 1: Project Setup" },
-    { id: "2", name: "Sprint 2: Authentication" },
-    { id: "3", name: "Sprint 3: Core Features" },
-  ];
 
   // Sample tasks - bisa diambil dari API atau data.json
   const [sprintTasks, setSprintTasks] = React.useState([
@@ -163,29 +149,6 @@ export function AddTaskForm({ sprintId, projectId, onBack }) {
           </div>
         </CardHeader>
         <CardContent className="space-y-6 pt-6">
-          {/* Sprint Selection */}
-          <div className="space-y-2">
-            <Label htmlFor="sprintId">Sprint</Label>
-            <Select
-              value={formData.sprintId}
-              onValueChange={(value) => handleInputChange("sprintId", value)}
-            >
-              <SelectTrigger id="sprintId" className="w-full focus-visible:ring-primary/20">
-                <SelectValue placeholder="Select a sprint" />
-              </SelectTrigger>
-              <SelectContent>
-                {sprints.map((sprint) => (
-                  <SelectItem key={sprint.id} value={sprint.id}>
-                    {sprint.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <CardDescription>
-              Select the sprint for this task
-            </CardDescription>
-          </div>
-
           {/* Task ID */}
           <div className="space-y-2">
             <Label htmlFor="taskId">Task ID</Label>

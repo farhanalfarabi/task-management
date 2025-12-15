@@ -23,20 +23,21 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { AddTaskModal } from "./add-task-modal";
+import { Checkbox } from "@/lib/components/ui/checkbox";
 
 export function DataTableTasks({ columns, data: initialData }) {
   const [data, setData] = React.useState(initialData);
-  const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [sorting, setSorting] = React.useState([]);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = React.useState(false);
 
-  // Ensure each row has a unique id
+  // Ensure each row has a unique id and completion status
   const dataWithIds = React.useMemo(() => {
     return data.map((row, index) => ({
       ...row,
       id: row.id || `row-${index}`,
+      isCompleted: row.isCompleted ?? false,
     }));
   }, [data]);
 
@@ -45,14 +46,50 @@ export function DataTableTasks({ columns, data: initialData }) {
     setData(initialData);
   }, [initialData]);
 
+  const handleToggleCompletion = React.useCallback((taskId, isCompleted) => {
+    setData((prevData) =>
+      prevData.map((task, index) => {
+        const taskIdToMatch = task.id || `row-${index}`;
+        if (taskIdToMatch === taskId) {
+          return { ...task, isCompleted };
+        }
+        return task;
+      })
+    );
+  }, []);
+
+  const columnsWithCompletion = React.useMemo(() => {
+    return columns.map((col) => {
+      if (col.id === "select") {
+        return {
+          ...col,
+          cell: ({ row }) => {
+            const taskId = row.original.id;
+            return (
+              <div className="relative z-10" onClick={(e) => e.stopPropagation()}>
+                <Checkbox
+                  checked={row.original.isCompleted ?? false}
+                  onCheckedChange={(value) => {
+                    handleToggleCompletion(taskId, !!value);
+                  }}
+                  aria-label="Mark task as completed"
+                  className="translate-y-[2px] cursor-pointer" />
+              </div>
+            );
+          },
+        };
+      }
+      return col;
+    });
+  }, [columns, handleToggleCompletion]);
+
   const table = useReactTable({
     data: dataWithIds,
-    columns,
+    columns: columnsWithCompletion,
     getRowId: (row) => row.id,
     state: {
       sorting,
       columnVisibility,
-      rowSelection,
       columnFilters,
     },
     initialState: {
@@ -60,8 +97,6 @@ export function DataTableTasks({ columns, data: initialData }) {
         pageSize: 10,
       },
     },
-    enableRowSelection: true,
-    onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
@@ -74,7 +109,7 @@ export function DataTableTasks({ columns, data: initialData }) {
   });
 
   const handleAddTask = (newTask) => {
-    setData((prevData) => [...prevData, newTask]);
+    setData((prevData) => [...prevData, { ...newTask, isCompleted: false }]);
   };
 
   return (
@@ -113,21 +148,31 @@ export function DataTableTasks({ columns, data: initialData }) {
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map((row) => {
+                const isCompleted = row.original.isCompleted ?? false;
+                return (
+                  <TableRow
+                    key={row.id}
+                    data-state={isCompleted && "completed"}
+                    className={isCompleted ? "opacity-60" : ""}
+                  >
+                    {row.getVisibleCells().map((cell) => {
+                      const isCheckboxCell = cell.column.id === "select";
+                      return (
+                        <TableCell 
+                          key={cell.id}
+                          className={isCompleted && !isCheckboxCell ? "line-through" : ""}
+                        >
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
             ) : (
               <TableRow>
                 <TableCell

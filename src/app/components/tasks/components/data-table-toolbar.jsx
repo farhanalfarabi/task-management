@@ -17,13 +17,14 @@ export function DataTableToolbar(
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center gap-2">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-2 sm:flex-row sm:flex-1 sm:items-center">
         <Input
           placeholder="Filter members..."
           value={(table.getColumn("title")?.getFilterValue()) ?? ""}
           onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
-          className="h-8 w-[150px] lg:w-[250px]" />
+          className="h-8 w-full sm:w-[150px] lg:w-[250px]" />
+        <div className="flex flex-wrap items-center gap-2">
         {table.getColumn("status") && (
           <DataTableFacetedFilter column={table.getColumn("status")} title="Status" options={statuses} />
         )}
@@ -34,15 +35,16 @@ export function DataTableToolbar(
             options={priorities} />
         )}
         {isFiltered && (
-          <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()}>
+            <Button variant="ghost" size="sm" onClick={() => table.resetColumnFilters()} className="w-full sm:w-auto">
             Reset
             <X />
           </Button>
         )}
+        </div>
       </div>
       <div className="flex items-center gap-2">
         <DataTableViewOptions table={table} />
-        <Button variant="outline" size="sm" onClick={onAddTaskClick}>
+        <Button variant="outline" size="sm" onClick={onAddTaskClick} className="w-full sm:w-auto">
           <IconPlus /> Add Task
         </Button>
       </div>

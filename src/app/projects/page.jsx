@@ -1,8 +1,15 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { IconDownload, IconPlus } from "@tabler/icons-react";
+import { Button } from "@/lib/components/ui/button";
 import data from "@/app/data.json";
 import { ProjectCard } from "@/app/projects/components/project-card";
 import { Separator } from "@/lib/components/ui/separator";
+import { PageHeader } from "@/lib/components/page-header";
 
 export default function ProjectsPage() {
+  const router = useRouter();
   const projects = data.projects || [];
   
   // Filter projects berdasarkan status
@@ -13,9 +20,48 @@ export default function ProjectsPage() {
     (project) => project.status === "Completed"
   );
 
+  const handleExport = () => {
+    // Handle export functionality
+    console.log("Export projects");
+    // TODO: Implement export logic (CSV, Excel, etc.)
+  };
+
+  const handleAddNewProject = () => {
+    router.push("/projects/add");
+  };
+
   return (
-    <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-      <div className="px-4 lg:px-6">
+    <>
+      <PageHeader 
+        title="Projects" 
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Projects" }
+        ]}
+        actions={
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExport}
+              className="gap-2"
+            >
+              <IconDownload className="size-4" />
+              <span className="hidden sm:inline">Export</span>
+            </Button>
+            <Button
+              size="sm"
+              onClick={handleAddNewProject}
+              className="gap-2"
+            >
+              <IconPlus className="size-4" />
+              <span className="hidden sm:inline">Add New Project</span>
+            </Button>
+          </>
+        }
+      />
+      <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+        <div className="px-4 lg:px-6">
         {/* Active Projects Section */}
         <div className="mb-6 flex flex-row items-center justify-between">
           <h1 className="text-2xl font-semibold tracking-tight">Active Projects</h1>
@@ -47,7 +93,8 @@ export default function ProjectsPage() {
           </>
         )}
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

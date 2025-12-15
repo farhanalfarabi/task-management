@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { Badge } from "@/lib/components/ui/badge";
 import { Checkbox } from "@/lib/components/ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "@/lib/components/ui/avatar";
@@ -10,20 +10,14 @@ import { DataTableRowActions } from "./data-table-row-actions";
 export const columns = [
   {
     id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-        className="translate-y-[2px]" />
+    header: () => (
+      <span className="text-sm font-medium">Done</span>
     ),
-    cell: ({ row }) => (
+    cell: ({ row, onToggleCompletion }) => (
       <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
+        checked={row.original.isCompleted ?? false}
+        onCheckedChange={(value) => onToggleCompletion?.(row.original.id, !!value)}
+        aria-label="Mark task as completed"
         className="translate-y-[2px]" />
     ),
     enableSorting: false,
@@ -37,11 +31,11 @@ export const columns = [
       const memberName = row.original.memberName || row.original.name || row.original.title || row.original.id || "Unknown";
       const avatarUrl = row.original.avatar || 
         `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(memberName)}`;
-      const isSelected = row.getIsSelected();
+      const isCompleted = row.original.isCompleted ?? false;
       
       return (
-        <div className={`flex items-center gap-3 w-[200px] ${isSelected ? 'line-through opacity-60' : ''}`}>
-          <Avatar className={`size-8 ${isSelected ? 'opacity-60' : ''}`}>
+        <div className="flex items-center gap-3 w-[200px]">
+          <Avatar className={`size-8 ${isCompleted ? 'opacity-60' : ''}`}>
             <AvatarImage src={avatarUrl} alt={memberName} />
             <AvatarFallback className="bg-muted">
               {memberName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
@@ -64,11 +58,11 @@ export const columns = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Task" />,
     cell: ({ row }) => {
       const label = labels.find((label) => label.value === row.original.label);
-      const isSelected = row.getIsSelected();
+      const isCompleted = row.original.isCompleted ?? false;
 
       return (
-        <div className={`flex gap-2 ${isSelected ? 'line-through opacity-60' : ''}`}>
-          {label && <Badge variant="outline" className={isSelected ? 'opacity-60' : ''}>{label.label}</Badge>}
+        <div className="flex gap-2">
+          {label && <Badge variant="outline" className={isCompleted ? 'opacity-60' : ''}>{label.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">{row.getValue("title")}</span>
         </div>
       );
@@ -79,14 +73,14 @@ export const columns = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
     cell: ({ row }) => {
       const status = statuses.find((status) => status.value === row.getValue("status"));
-      const isSelected = row.getIsSelected();
+      const isCompleted = row.original.isCompleted ?? false;
 
       if (!status) {
         return null;
       }
 
       return (
-        <div className={`flex w-[100px] items-center gap-2 ${isSelected ? 'line-through opacity-60' : ''}`}>
+        <div className="flex w-[100px] items-center gap-2">
           {status.icon && <status.icon className="text-muted-foreground size-4" />}
           <span>{status.label}</span>
         </div>
@@ -101,14 +95,14 @@ export const columns = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Priority" />,
     cell: ({ row }) => {
       const priority = priorities.find((priority) => priority.value === row.getValue("priority"));
-      const isSelected = row.getIsSelected();
+      const isCompleted = row.original.isCompleted ?? false;
 
       if (!priority) {
         return null;
       }
 
       return (
-        <div className={`flex items-center gap-2 ${isSelected ? 'line-through opacity-60' : ''}`}>
+        <div className="flex items-center gap-2">
           {priority.icon && <priority.icon className="text-muted-foreground size-4" />}
           <span>{priority.label}</span>
         </div>
@@ -123,10 +117,10 @@ export const columns = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Deadline" />,
     cell: ({ row }) => {
       const deadline = row.getValue("deadline");
-      const isSelected = row.getIsSelected();
+      const isCompleted = row.original.isCompleted ?? false;
       
       if (!deadline) {
-        return <span className={`text-muted-foreground ${isSelected ? 'line-through opacity-60' : ''}`}>-</span>;
+        return <span className="text-muted-foreground">-</span>;
       }
       
       // Format date if it's a date string
@@ -134,7 +128,7 @@ export const columns = [
       const isValidDate = !isNaN(date.getTime());
       
       return (
-        <div className={`flex items-center ${isSelected ? 'line-through opacity-60' : ''}`}>
+        <div className="flex items-center">
           <span className="text-sm">
             {isValidDate 
               ? date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })

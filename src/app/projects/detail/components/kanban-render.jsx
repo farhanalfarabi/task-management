@@ -74,16 +74,16 @@ export function KanbanRender({ project, initialColumns, onColumnsChange }) {
                       <div className="flex items-center justify-between gap-2">
                         <span className="line-clamp-1 text-sm font-medium">{task.title}</span>
                         <div className="flex items-center gap-1">
-                          {task.priority && (
-                            <Badge
-                              className={cn(
-                                "pointer-events-none h-5 rounded-sm px-1.5 text-[11px] capitalize",
-                                priorityColors[task.priority] || priorityColors.low
-                              )}
-                            >
-                              {task.priority}
-                            </Badge>
-                          )}
+                        {task.priority && (
+                          <Badge
+                            className={cn(
+                              "pointer-events-none h-5 rounded-sm px-1.5 text-[11px] capitalize",
+                              priorityColors[task.priority] || priorityColors.low
+                            )}
+                          >
+                            {task.priority}
+                          </Badge>
+                        )}
                           <Button
                             variant="ghost"
                             size="icon"
