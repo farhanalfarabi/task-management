@@ -32,10 +32,10 @@ export function StatCards({ cards = [] }) {
     switch (color) {
       case "purple":
         return {
-          bg: "bg-purple-50 dark:bg-purple-950/20",
-          icon: "text-purple-600 dark:text-purple-400",
-          value: "text-purple-700 dark:text-purple-300",
-          title: "text-purple-600 dark:text-purple-400"
+          bg: "bg-primary/5 dark:bg-primary/10",
+          icon: "text-primary",
+          value: "text-primary",
+          title: "text-primary"
         };
       case "green":
         return {

@@ -22,12 +22,15 @@ import {
 
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
+import { AddTaskModal } from "./add-task-modal";
 
-export function DataTableTasks({ columns, data }) {
+export function DataTableTasks({ columns, data: initialData }) {
+  const [data, setData] = React.useState(initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnFilters, setColumnFilters] = React.useState([]);
   const [sorting, setSorting] = React.useState([]);
+  const [isAddTaskModalOpen, setIsAddTaskModalOpen] = React.useState(false);
 
   // Ensure each row has a unique id
   const dataWithIds = React.useMemo(() => {
@@ -36,6 +39,11 @@ export function DataTableTasks({ columns, data }) {
       id: row.id || `row-${index}`,
     }));
   }, [data]);
+
+  // Update data when initialData changes (from server)
+  React.useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
 
   const table = useReactTable({
     data: dataWithIds,
@@ -65,12 +73,24 @@ export function DataTableTasks({ columns, data }) {
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
+  const handleAddTask = (newTask) => {
+    setData((prevData) => [...prevData, newTask]);
+  };
+
   return (
     <div className="flex flex-col gap-4 px-4 lg:px-6 ">
       <h1 className="text-foreground text-xl font-semibold md:text-2xl">
         Tasks List
       </h1>
-      <DataTableToolbar table={table} />
+      <DataTableToolbar 
+        table={table} 
+        onAddTaskClick={() => setIsAddTaskModalOpen(true)}
+      />
+      <AddTaskModal
+        open={isAddTaskModalOpen}
+        onOpenChange={setIsAddTaskModalOpen}
+        onAddTask={handleAddTask}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

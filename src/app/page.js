@@ -7,6 +7,7 @@ import data from "@/app/data.json";
 import { SectionCards } from "@/app/components/section-cards";
 import { StatCards } from "@/app/components/stat-cards";
 import { ActivityFeed } from "@/app/components/activity-feed";
+import { TaskListBoard } from "@/app/components/task-list-board";
 import { DataTableTasks } from "@/app/components/tasks/components/data-table-tasks";
 import { columns } from "@/app/components/tasks/components/columns";
 import { taskSchema } from "@/app/components/tasks/data/schema";
@@ -32,7 +33,10 @@ export default async function Page() {
       <Separator />
       <DataTableTasks data={tasks} columns={columns} />
       <Separator />
-      <ActivityFeed activities={data.activities} />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+        <ActivityFeed activities={data.activities} />
+        <TaskListBoard />
+      </div>
     </div>
   );
 }

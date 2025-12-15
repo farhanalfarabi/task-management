@@ -268,6 +268,36 @@
       "status": { "text": "In progress", "color": "blue" },
       "timestamp": "08:30 AM",
       "date": "SATURDAY, 05 MARCH"
+    },
+    {
+      "id": "9",
+      "type": "status_change",
+      "user": { "name": "Sarah Chen", "initials": "SC", "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen" },
+      "action": "has change",
+      "target": "TASK-101",
+      "status": { "text": "In progress", "color": "blue" },
+      "timestamp": "10:15 AM",
+      "date": "MONDAY, 09 DECEMBER"
+    },
+    {
+      "id": "10",
+      "type": "comment",
+      "user": { "name": "Sarah Chen", "initials": "SC", "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen" },
+      "action": "commented on",
+      "target": "TASK-101",
+      "comment": "Working on responsive navigation component. Should be ready by end of week.",
+      "timestamp": "02:30 PM",
+      "date": "MONDAY, 09 DECEMBER"
+    },
+    {
+      "id": "11",
+      "type": "status_change",
+      "user": { "name": "Sarah Chen", "initials": "SC", "avatar": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen" },
+      "action": "has change",
+      "target": "TASK-102",
+      "status": { "text": "Completed", "color": "green" },
+      "timestamp": "04:45 PM",
+      "date": "MONDAY, 09 DECEMBER"
     }
   ],
   "projects": [

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import {
   closestCenter,
   DndContext,
@@ -222,19 +223,29 @@ const columns = [
 function DraggableRow({
   row
 }) {
+  const router = useRouter();
   const { transform, transition, setNodeRef, isDragging } = useSortable({
     id: row.original.id,
   })
+
+  const handleRowClick = (e) => {
+    // Prevent navigation if clicking on interactive elements
+    if (e.target.closest('button') || e.target.closest('[role="button"]') || e.target.closest('a')) {
+      return;
+    }
+    router.push(`/teams-overview/detail?id=${row.original.id}`);
+  };
 
   return (
     <TableRow
       data-dragging={isDragging}
       ref={setNodeRef}
-      className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
+      className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80 cursor-pointer hover:bg-muted/50"
       style={{
         transform: CSS.Transform.toString(transform),
         transition: transition,
-      }}>
+      }}
+      onClick={handleRowClick}>
       {row.getVisibleCells().map((cell) => (
         <TableCell key={cell.id}>
           {flexRender(cell.column.columnDef.cell, cell.getContext())}

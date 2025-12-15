@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { X } from "lucide-react";
 import { IconPlus } from "@tabler/icons-react";
 import { Button } from "@/lib/components/ui/button";
@@ -10,7 +10,8 @@ import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 
 export function DataTableToolbar(
   {
-    table
+    table,
+    onAddTaskClick
   }
 ) {
   const isFiltered = table.getState().columnFilters.length > 0;
@@ -41,7 +42,9 @@ export function DataTableToolbar(
       </div>
       <div className="flex items-center gap-2">
         <DataTableViewOptions table={table} />
-        <Button variant="outline" size="sm"> <IconPlus /> Add Task</Button>
+        <Button variant="outline" size="sm" onClick={onAddTaskClick}>
+          <IconPlus /> Add Task
+        </Button>
       </div>
     </div>
   );

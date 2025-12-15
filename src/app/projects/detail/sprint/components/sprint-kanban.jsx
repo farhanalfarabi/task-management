@@ -10,32 +10,118 @@ import * as Kanban from "@/lib/components/ui/kanban";
 import { cn } from "@/lib/utils";
 
 const COLUMN_TITLES = {
-  planning: "Planning",
-  development: "Development",
-  deployment: "Deployment",
+  pending: "Pending",
+  "in-progress": "In Progress",
+  review: "Review",
+  done: "Done",
 };
 
-export function KanbanRender({ project, initialColumns, onColumnsChange }) {
+export function SprintKanban({ sprint }) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const projectId = searchParams.get("id") || "1";
-  
-  const [columns, setColumns] = React.useState(initialColumns || {
-    planning: [],
-    development: [],
-    deployment: [],
+  const sprintId = searchParams.get("id") || "1";
+  const projectId = searchParams.get("projectId") || "1";
+
+  // Sample tasks data for sprint - bisa diambil dari sprint data jika ada
+  const [columns, setColumns] = React.useState({
+    pending: [
+      {
+        id: "1",
+        title: "Setup development environment",
+        description: "Configure local development setup",
+        priority: "high",
+        assignee: {
+          name: "Sarah Chen",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen",
+        },
+        dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "2",
+        title: "Create database migrations",
+        description: "Setup initial database schema",
+        priority: "high",
+        assignee: {
+          name: "Michael Chen",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MichaelChen",
+        },
+        dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+    ],
+    "in-progress": [
+      {
+        id: "3",
+        title: "Implement user authentication",
+        description: "Build login and registration flow",
+        priority: "high",
+        assignee: {
+          name: "David Kim",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DavidKim",
+        },
+        dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "4",
+        title: "Design API endpoints",
+        description: "Create RESTful API structure",
+        priority: "medium",
+        assignee: {
+          name: "Sarah Chen",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen",
+        },
+        dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+    ],
+    review: [
+      {
+        id: "5",
+        title: "Code review for payment module",
+        description: "Review payment integration code",
+        priority: "high",
+        assignee: {
+          name: "Michael Chen",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=MichaelChen",
+        },
+        dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+    ],
+    done: [
+      {
+        id: "6",
+        title: "Setup project repository",
+        description: "Initialize Git repository and CI/CD",
+        priority: "medium",
+        assignee: {
+          name: "David Kim",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=DavidKim",
+        },
+        dueDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+      {
+        id: "7",
+        title: "Create project documentation",
+        description: "Write initial project README",
+        priority: "low",
+        assignee: {
+          name: "Sarah Chen",
+          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahChen",
+        },
+        dueDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+    ],
   });
 
   const handleValueChange = React.useCallback((newColumns) => {
     setColumns(newColumns);
-    onColumnsChange?.(newColumns);
-  }, [onColumnsChange]);
+    // Bisa ditambahkan callback untuk save ke backend
+    console.log("Columns changed:", newColumns);
+  }, []);
 
-  const handleViewDetail = (e, task) => {
+  const handleViewTaskDetail = (e, task) => {
     e.stopPropagation();
     e.preventDefault();
-    // Navigate to sprint detail page
-    router.push(`/projects/detail/sprint?id=${task.id || "1"}&projectId=${projectId}`);
+    // Navigate to task detail page
+    router.push(`/projects/detail/sprint/task?id=${task.id}&sprintId=${sprintId}&projectId=${projectId}`);
   };
 
   const priorityColors = {
@@ -55,7 +141,7 @@ export function KanbanRender({ project, initialColumns, onColumnsChange }) {
 
   return (
     <Kanban.Root value={columns} onValueChange={handleValueChange} getItemValue={(item) => item.id}>
-      <Kanban.Board className="grid auto-rows-fr sm:grid-cols-3 overflow-x-auto pb-4">
+      <Kanban.Board className="grid auto-rows-fr sm:grid-cols-2 lg:grid-cols-4 overflow-x-auto pb-4">
         {Object.entries(columns).map(([columnValue, tasks]) => (
           <Kanban.Column key={columnValue} value={columnValue} className="min-w-[280px]">
             <div className="flex items-center justify-between mb-2">
@@ -88,13 +174,13 @@ export function KanbanRender({ project, initialColumns, onColumnsChange }) {
                             variant="ghost"
                             size="icon"
                             className="h-6 w-6 shrink-0 relative z-10"
-                            title="View Details"
+                            title="View Task Details"
                             type="button"
                             data-no-dnd="true"
                             onMouseDown={(e) => {
                               e.stopPropagation();
                               e.preventDefault();
-                              handleViewDetail(e, task);
+                              handleViewTaskDetail(e, task);
                             }}
                             onPointerDown={(e) => {
                               e.stopPropagation();
@@ -102,7 +188,7 @@ export function KanbanRender({ project, initialColumns, onColumnsChange }) {
                             onClick={(e) => {
                               e.stopPropagation();
                               e.preventDefault();
-                              handleViewDetail(e, task);
+                              handleViewTaskDetail(e, task);
                             }}
                           >
                             <IconEye className="size-3.5" />

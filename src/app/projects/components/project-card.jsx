@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { IconDotsVertical, IconTrendingUp, IconCheck, IconCalendar } from "@tabler/icons-react";
 import { ShoppingCart, Code, Palette, Database, Smartphone, Globe } from "lucide-react";
 
@@ -31,7 +32,7 @@ const iconMap = {
 };
 
 const statusColors = {
-  "In Progress": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
+  "In Progress": "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary",
   "Completed": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
   "On Hold": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
   "Planning": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
@@ -44,6 +45,7 @@ const trackStatusColors = {
 };
 
 export function ProjectCard({ project }) {
+  const router = useRouter();
   const IconComponent = iconMap[project.icon] || ShoppingCart;
   const statusColor = statusColors[project.status] || statusColors["In Progress"];
   const trackColor = trackStatusColors[project.trackStatus] || trackStatusColors["On track"];
@@ -55,14 +57,20 @@ export function ProjectCard({ project }) {
     return `Due ${months[date.getMonth()]} ${date.getDate()}`;
   };
 
+  const handleEdit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`/projects/detail/edit?id=${project.id}`);
+  };
+
   return (
     <Link href={`/projects/detail?id=${project.id}`}>
       <Card className="hover:shadow-md transition-shadow cursor-pointer">
         <CardHeader >
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-3">
-              <div className="rounded-lg bg-purple-100 dark:bg-purple-900/30 p-2.5">
-                <IconComponent className="size-5 text-purple-600 dark:text-purple-400" />
+              <div className="rounded-lg bg-primary/10 dark:bg-primary/20 p-2.5">
+                <IconComponent className="size-5 text-primary" />
               </div>
               <div className="flex flex-col gap-1.5">
                 <h3 className="font-semibold text-base leading-tight">{project.name}</h3>
@@ -87,7 +95,7 @@ export function ProjectCard({ project }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
-                <DropdownMenuItem onClick={(e) => e.stopPropagation()}>Edit</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
                 <DropdownMenuItem onClick={(e) => e.stopPropagation()}>Duplicate</DropdownMenuItem>
                 <DropdownMenuItem onClick={(e) => e.stopPropagation()}>Archive</DropdownMenuItem>
                 <DropdownMenuItem className="text-destructive" onClick={(e) => e.stopPropagation()}>Delete</DropdownMenuItem>
@@ -117,7 +125,7 @@ export function ProjectCard({ project }) {
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">Progress</span>
-            <span className="font-medium text-purple-600 dark:text-purple-400">
+            <span className="font-medium text-primary">
               {project.progress}%
             </span>
           </div>

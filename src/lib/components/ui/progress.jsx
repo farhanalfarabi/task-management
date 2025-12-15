@@ -13,7 +13,7 @@ const Progress = React.forwardRef(({ className, value, ...props }, ref) => (
     {...props}
   >
     <div
-      className="h-full bg-purple-600 dark:bg-purple-400 transition-all"
+      className="h-full bg-primary transition-all"
       style={{ width: `${value || 0}%` }}
     />
   </div>

@@ -302,5 +302,165 @@
     "label": "bug",
     "priority": "high",
     "deadline": "2025-02-28"
+  },
+  {
+    "memberName": "Sarah Chen",
+    "title": "Implement responsive navigation component for mobile devices",
+    "status": "in progress",
+    "label": "feature",
+    "priority": "high",
+    "deadline": "2024-12-20"
+  },
+  {
+    "memberName": "Sarah Chen",
+    "title": "Fix CSS styling issues in dashboard layout",
+    "status": "todo",
+    "label": "bug",
+    "priority": "medium",
+    "deadline": "2024-12-25"
+  },
+  {
+    "memberName": "Sarah Chen",
+    "title": "Optimize React component rendering performance",
+    "status": "in progress",
+    "label": "feature",
+    "priority": "high",
+    "deadline": "2025-01-05"
+  },
+  {
+    "memberName": "Sarah Chen",
+    "title": "Create user authentication UI components",
+    "status": "done",
+    "label": "feature",
+    "priority": "medium",
+    "deadline": "2024-11-15"
+  },
+  {
+    "memberName": "Sarah Chen",
+    "title": "Update design system documentation",
+    "status": "done",
+    "label": "documentation",
+    "priority": "low",
+    "deadline": "2024-11-20"
+  },
+  {
+    "memberName": "Michael Chen",
+    "title": "Design RESTful API endpoints for user management",
+    "status": "in progress",
+    "label": "feature",
+    "priority": "high",
+    "deadline": "2024-12-22"
+  },
+  {
+    "memberName": "Michael Chen",
+    "title": "Implement database migration scripts",
+    "status": "todo",
+    "label": "feature",
+    "priority": "medium",
+    "deadline": "2024-12-28"
+  },
+  {
+    "memberName": "Michael Chen",
+    "title": "Fix authentication middleware bug",
+    "status": "in progress",
+    "label": "bug",
+    "priority": "high",
+    "deadline": "2024-12-18"
+  },
+  {
+    "memberName": "Michael Chen",
+    "title": "Optimize database query performance",
+    "status": "done",
+    "label": "feature",
+    "priority": "medium",
+    "deadline": "2024-11-25"
+  },
+  {
+    "memberName": "Michael Chen",
+    "title": "Write API documentation for payment endpoints",
+    "status": "done",
+    "label": "documentation",
+    "priority": "low",
+    "deadline": "2024-11-30"
+  },
+  {
+    "memberName": "Priya Singh",
+    "title": "Create test cases for user registration flow",
+    "status": "in progress",
+    "label": "feature",
+    "priority": "high",
+    "deadline": "2024-12-21"
+  },
+  {
+    "memberName": "Priya Singh",
+    "title": "Fix failing integration tests",
+    "status": "todo",
+    "label": "bug",
+    "priority": "high",
+    "deadline": "2024-12-19"
+  },
+  {
+    "memberName": "Priya Singh",
+    "title": "Perform security testing on authentication system",
+    "status": "in progress",
+    "label": "feature",
+    "priority": "high",
+    "deadline": "2025-01-03"
+  },
+  {
+    "memberName": "Priya Singh",
+    "title": "Update test documentation",
+    "status": "done",
+    "label": "documentation",
+    "priority": "low",
+    "deadline": "2024-11-28"
+  },
+  {
+    "memberName": "Alex Thompson",
+    "title": "Configure CI/CD pipeline for staging environment",
+    "status": "in progress",
+    "label": "feature",
+    "priority": "high",
+    "deadline": "2024-12-23"
+  },
+  {
+    "memberName": "Alex Thompson",
+    "title": "Set up monitoring and alerting system",
+    "status": "todo",
+    "label": "feature",
+    "priority": "medium",
+    "deadline": "2024-12-30"
+  },
+  {
+    "memberName": "Alex Thompson",
+    "title": "Fix deployment script error",
+    "status": "in progress",
+    "label": "bug",
+    "priority": "high",
+    "deadline": "2024-12-17"
+  },
+  {
+    "memberName": "Leila Ahmadi",
+    "title": "Design new landing page mockup",
+    "status": "in progress",
+    "label": "feature",
+    "priority": "high",
+    "deadline": "2024-12-24"
+  },
+  {
+    "memberName": "Leila Ahmadi",
+    "title": "Create icon set for mobile app",
+    "status": "todo",
+    "label": "feature",
+    "priority": "medium",
+    "deadline": "2025-01-02"
+  },
+  {
+    "memberName": "Leila Ahmadi",
+    "title": "Update brand guidelines document",
+    "status": "done",
+    "label": "documentation",
+    "priority": "low",
+    "deadline": "2024-11-22"
   }
 ]

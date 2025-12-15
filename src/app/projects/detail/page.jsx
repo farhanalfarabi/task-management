@@ -9,23 +9,14 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/lib/components/ui/tabs";
-import { Card, CardContent, CardHeader, CardTitle } from "@/lib/components/ui/card";
-import { Progress } from "@/lib/components/ui/progress";
-import { Avatar, AvatarFallback, AvatarImage } from "@/lib/components/ui/avatar";
-import { Badge } from "@/lib/components/ui/badge";
-import { IconTrendingUp, IconCheck, IconCalendar } from "@tabler/icons-react";
-import { ShoppingCart, Code, Palette, Database, Smartphone, Globe } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { KanbanRender } from "./components/kanban-render";
-
-const iconMap = {
-  shopping: ShoppingCart,
-  code: Code,
-  palette: Palette,
-  database: Database,
-  smartphone: Smartphone,
-  globe: Globe,
-};
+import { GanttRender } from "./components/gantt-render";
+import { DocumentsView } from "./components/documents-view";
+import { ProjectDetailsCard } from "./components/project-details-card";
+import { ProjectMetricsCard } from "./components/project-metrics-card";
+import { OverallProgressCard } from "./components/overall-progress-card";
+import { SprintProgressCard } from "./components/sprint-progress-card";
+import { UpcomingMilestonesCard } from "./components/upcoming-milestones-card";
 
 function ProjectDetailContent() {
   const searchParams = useSearchParams();
@@ -42,25 +33,6 @@ function ProjectDetailContent() {
     );
   }
 
-  const IconComponent = iconMap[project.icon] || ShoppingCart;
-  const statusColors = {
-    "In Progress": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
-    "Completed": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-    "On Hold": "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400",
-    "Planning": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  };
-  const trackColor = project.trackStatus === "On track" 
-    ? "text-green-600 dark:text-green-400"
-    : project.trackStatus === "At risk"
-    ? "text-yellow-600 dark:text-yellow-400"
-    : "text-red-600 dark:text-red-400";
-
-  const formatDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
-  };
 
   const getKanbanColumns = (project) => {
     // Generate sample tasks based on project
@@ -136,18 +108,29 @@ function ProjectDetailContent() {
         
 
         <Tabs defaultValue="overview" className="w-full">
-          <TabsList>
+          <TabsList className="w-full">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="sprint">Sprint</TabsTrigger>
             <TabsTrigger value="timeline">Timeline</TabsTrigger>
+            <TabsTrigger value="dokuments">Dokuments</TabsTrigger>
+
           </TabsList>
 
           <TabsContent value="overview" className="mt-6">
-           <Card>
-            
-           </Card>
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+              {/* Left Column: Project Details */}
+              <div className="lg:col-span-2 space-y-6">
+                <ProjectDetailsCard project={project} />
+                <OverallProgressCard project={project} />
+                <SprintProgressCard project={project} />
+                <UpcomingMilestonesCard project={project} />
+              </div>
 
-      
+              {/* Right Column: Metrics and Deadlines */}
+              <div>
+                <ProjectMetricsCard project={project} />
+              </div>
+            </div>
           </TabsContent>
 
           <TabsContent value="sprint" className="mt-6">
@@ -162,9 +145,22 @@ function ProjectDetailContent() {
           </TabsContent>
 
           <TabsContent value="timeline" className="mt-6">
-            <Card>
+            <GanttRender 
+              project={project}
+              onFeatureMove={(id, startAt, endAt) => {
+                console.log("Feature moved:", { id, startAt, endAt });
+              }}
+              onAddFeature={(feature) => {
+                console.log("Feature added:", feature);
+              }}
+              onAddMarker={(marker) => {
+                console.log("Marker added:", marker);
+              }}
+            />
+          </TabsContent>
               
-            </Card>
+          <TabsContent value="dokuments" className="mt-6">
+            <DocumentsView />
           </TabsContent>
         </Tabs>
       </div>
